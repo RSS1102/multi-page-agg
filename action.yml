@@ -1,0 +1,12 @@
+name: 'multi-page-aggregation'
+description: '使用github action尝试将一个repo下的多个项目聚合部署在同一个页面'
+author: 'RSS1102'
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'heart'
+  color: 'red'
+
+runs:
+  using: node20
+  main: dist/index.js
