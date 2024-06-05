@@ -1,0 +1,50 @@
+name: Release on Commit
+
+on:
+  push:
+    branches:
+      - main # 或者你希望监听的其他分支
+
+jobs:
+  check-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # 获取所有历史提交以检查最新一次提交信息
+
+    - name: Get Latest Commit Message
+      id: commit_message
+      run: |
+        echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }})"
+
+    - name: Set Commit Message
+      run: |
+        echo "COMMIT_MSG=${{ steps.commit_message.outputs.message }}" >> $GITHUB_ENV
+
+    - name: Check Commit Prefix and Extract Version
+      id: version_check
+      if: contains(toJson(steps.commit_message.outputs.message), 'v.') || contains(toJson(steps.commit_message.outputs.message), 'pre.')
+      run: |
+       VERSION=$(echo "$COMMIT_MSG" | grep -Eo '^(v|pre)\.[0-9.]*')
+       TRIGGER=$(echo "$VERSION" | grep -oE '^[vp]')
+
+        if [ -z "$VERSION" ]; then
+          echo "No valid version prefix found in commit message."
+          exit 1
+        fi
+
+        echo "::set-output name=valid::true"
+        echo "::set-output name=version::$VERSION"
+        echo "::set-output name=trigger::$TRIGGER"
+
+    - name: Create Release
+      if: steps.version_check.outputs.valid == 'true'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        tag_name: ${{ steps.version_check.outputs.version }}
+        release_name: Release ${{ steps.version_check.outputs.version }}
+        body: ${{ steps.commit_message.outputs.message }}
