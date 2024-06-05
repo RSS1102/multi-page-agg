@@ -15,13 +15,17 @@ export async function run(): Promise<void> {
 
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
+
     // 生成vite 模版
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
+ 
     const viteFilePath = await globCreate('template-vite-*/vite.config.*')
+    console.log('vite',viteFilePath)
     const files = await viteFilePath.glob()
     console.log('files', files)
+    
     files.map(async (file) => {
       console.log('file', file)
       // 匹配`template-vite-*一直到`/`之间的内容
@@ -37,6 +41,7 @@ export async function run(): Promise<void> {
       // 重命名文件夹使用nodejs
       fs.renameSync(`${file}/dist`, `${currentDir}/dist/${templateName[0]}`);
     })
+
     // 将文件夹部署到github page
     await new Promise<void>((resolve, reject) => {
       ghPages.publish(currentDir + '/dist', {
