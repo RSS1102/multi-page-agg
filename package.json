@@ -2,7 +2,7 @@
   "name": "multi-page-agg",
   "description": "使用github action尝试将一个repo下的多个项目聚合部署在同一个页面",
   "type": "module" ,
-  "version": "0.0.8",
+  "version": "0.0.2",
   "author": "",
   "private": true,
   "homepage": "https://github.com/RSS1102/multi-page-agg",
