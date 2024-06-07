@@ -15,6 +15,7 @@ export async function run(): Promise<void> {
 
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
+    await exec('pnpm run build');
 
     // 生成vite 模版
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
