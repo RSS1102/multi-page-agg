@@ -14,7 +14,7 @@ export async function run(): Promise<void> {
     fs.mkdirSync(`${currentDir}/dist`);
 
     await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
-    await exec('cd tdesign-starter-cli');
+    await exec('cd ./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
     await exec('pnpm run build');
