@@ -1,4 +1,4 @@
-import { setFailed as coreSetFailed } from '@actions/core'
+import { setFailed as coreSetFailed ,addPath as coreAddPath} from '@actions/core'
 import { exec } from '@actions/exec'
 import { create as globCreate } from '@actions/glob'
 import fs from 'fs';
@@ -11,11 +11,12 @@ import ghPages from 'gh-pages';
 export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
-    console.log('currentDir',currentDir);
     fs.mkdirSync(`${currentDir}/dist`);
+    coreAddPath(`${currentDir}/dist`);
+    coreAddPath(`${currentDir}/tdesign-starter-cli`);
+
 
     await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
-    console.log('done');
     await exec('cd ./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
