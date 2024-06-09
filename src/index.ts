@@ -12,11 +12,10 @@ export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
     fs.mkdirSync(`${currentDir}/dist`);
-    coreAddPath(`${currentDir}/dist`);
-    coreAddPath(`${currentDir}/tdesign-starter-cli`);
-
+    coreAddPath(currentDir);
 
     await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
+
     await exec('cd ./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
