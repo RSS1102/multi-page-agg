@@ -11,12 +11,13 @@ import ghPages from 'gh-pages';
 export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
-    fs.mkdirSync(`${currentDir}/dist`);
     coreAddPath(currentDir);
+
+    fs.mkdirSync(`${currentDir}/dist`);
 
     await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
 
-    await exec('cd ./tdesign-starter-cli');
+    process.chdir('./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
     await exec('pnpm install');
     await exec('pnpm run build');
