@@ -17,10 +17,10 @@ export async function run(): Promise<void> {
 
     await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
 
-    process.chdir('./tdesign-starter-cli');
+    // process.chdir('cd ./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
-    await exec('pnpm install');
-    await exec('pnpm run build');
+    await exec('cd ./tdesign-starter-cli && pnpm install');
+    await exec('cd ./tdesign-starter-cli && pnpm run build');
 
     // 生成vite 模版
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
