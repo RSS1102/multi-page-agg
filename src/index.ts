@@ -1,8 +1,9 @@
-import { setFailed as coreSetFailed ,addPath as coreAddPath} from '@actions/core'
+import core from '@actions/core'
 import { exec } from '@actions/exec'
-import { create as globCreate } from '@actions/glob'
+import glob from '@actions/glob'
 import fs from 'fs';
 import ghPages from 'gh-pages';
+import { cloneRepo } from './utils.js';
 
 /**
  * The main function for the action.
@@ -11,14 +12,14 @@ import ghPages from 'gh-pages';
 export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
-    coreAddPath(currentDir);
 
     fs.mkdirSync(`${currentDir}/dist`);
 
-    await exec('git clone https://github.com/Tencent/tdesign-starter-cli.git');
+    await cloneRepo();
 
     // process.chdir('cd ./tdesign-starter-cli');
     await exec('npm install pnpm i -g');
+    core.debug(`pnpm`)
     await exec('cd ./tdesign-starter-cli && pnpm install');
     await exec('cd ./tdesign-starter-cli && pnpm run build');
 
@@ -27,19 +28,19 @@ export async function run(): Promise<void> {
     await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
 
-    const viteFilePath = await globCreate('template-vite-*/vite.config.*')
-    console.log('vite', viteFilePath)
+    const viteFilePath = await glob.create('template-vite-*/vite.config.*')
+    core.debug(`vite ${viteFilePath}`)
     const files = await viteFilePath.glob()
-    console.log('files', files)
+    core.debug(`files ${files}`)
 
     files.map(async (file) => {
-      console.log('file', file)
+      core.debug(`file ${file}`)
       // 匹配`template-vite-*一直到`/`之间的内容
       const templateName = file.match(/template-vite-(.*)\//)
-      console.log('templateName', templateName)
+      core.debug(`templateName ${templateName}`)
       const readViteConfig = fs.readFileSync(file, 'utf-8');
       if (!templateName) {
-        return coreSetFailed('模版名称匹配失败');;
+        return core.setFailed('模版名称匹配失败');;
       }
       const newViteConfig = readViteConfig.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(file, newViteConfig);
@@ -57,17 +58,17 @@ export async function run(): Promise<void> {
       }, (err: { message: string | Error }) => {
         if (err) {
           console.error('部署失败', err);
-          coreSetFailed(err.message);
+          core.setFailed(err.message);
           return reject(err);
         }
-        console.log('部署成功');
+        core.debug('部署成功');
         resolve();
       });
     });
 
   } catch (error) {
     // Fail the workflow run if an error occurs
-    if (error instanceof Error) coreSetFailed(error.message)
+    if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
