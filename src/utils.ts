@@ -9,7 +9,7 @@ export const cloneRepo = async (): Promise<void> => {
     // todo: 传入 options 参数
     const exitcode = await exec(
       'git',
-      ['clone', '--depth=1', '--single-branch', '--branch', 'dev', 'https://github.com/Tencent/tdesign-starter-cli', 'tdesign-starter-cli'],
+      ['clone', '--depth=1', '--single-branch', '--branch', 'develop', 'https://github.com/Tencent/tdesign-starter-cli', 'tdesign-starter-cli'],
     );
     if (exitcode !== 0) {
       core.setFailed('clone repo failed');
