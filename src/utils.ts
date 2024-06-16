@@ -11,11 +11,38 @@ export const cloneRepo = async (): Promise<void> => {
       'git',
       ['clone', '--depth=1', '--single-branch', '--branch', 'develop', 'https://github.com/Tencent/tdesign-starter-cli', 'tdesign-starter-cli'],
     );
+    
     if (exitcode !== 0) {
       core.setFailed('clone repo failed');
     }
     core.debug(`clone repo success`);
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error.message)
+  }
+};
 
+export const pnpmInstall = async (): Promise<void> => {
+  try {
+    const exitcode = await exec('cd ./tdesign-starter-cli && pnpm install');
+
+    if (exitcode !== 0) {
+      core.setFailed('pnpm install failed');
+    }
+    core.debug(`pnpm install success`);
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error.message)
+  }
+};
+
+export const buildProducts = async (): Promise<void> => {
+  try {
+    const pnpmInstallExitcode = await exec('cd ./tdesign-starter-cli && pnpm install');
+    const exitcode = await exec('cd ./tdesign-starter-cli && pnpm run build');
+
+    if (exitcode !== 0 || pnpmInstallExitcode !== 0) {
+      core.setFailed('build failed');
+    }
+    core.debug(`build success`);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

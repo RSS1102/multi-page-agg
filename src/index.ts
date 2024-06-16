@@ -3,7 +3,7 @@ import { exec } from '@actions/exec'
 import glob from '@actions/glob'
 import fs from 'fs';
 import ghPages from 'gh-pages';
-import { cloneRepo } from './utils.js';
+import { buildProducts, cloneRepo, pnpmInstall } from './utils.js';
 
 /**
  * The main function for the action.
@@ -16,12 +16,9 @@ export async function run(): Promise<void> {
     fs.mkdirSync(`${currentDir}/dist`);
 
     await cloneRepo();
+    await pnpmInstall();
+    await buildProducts();
 
-    // process.chdir('cd ./tdesign-starter-cli');
-    await exec('npm install pnpm i -g');
-    core.debug(`pnpm`)
-    await exec('cd ./tdesign-starter-cli && pnpm install');
-    await exec('cd ./tdesign-starter-cli && pnpm run build');
 
     // 生成vite 模版
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
@@ -49,22 +46,22 @@ export async function run(): Promise<void> {
       fs.renameSync(`${file}/dist`, `${currentDir}/dist/${templateName[0]}`);
     })
 
-    // 将文件夹部署到github page
-    await new Promise<void>((resolve, reject) => {
-      ghPages.publish(currentDir + '/dist', {
-        branch: 'gh-pages', // 更改为你的目标分支
-        message: '自动部署更新',
-        silent: false,
-      }, (err: { message: string | Error }) => {
-        if (err) {
-          console.error('部署失败', err);
-          core.setFailed(err.message);
-          return reject(err);
-        }
-        core.debug('部署成功');
-        resolve();
-      });
-    });
+    // // 将文件夹部署到github page
+    // await new Promise<void>((resolve, reject) => {
+    //   ghPages.publish(currentDir + '/dist', {
+    //     branch: 'gh-pages', // 更改为你的目标分支
+    //     message: '自动部署更新',
+    //     silent: false,
+    //   }, (err: { message: string | Error }) => {
+    //     if (err) {
+    //       console.error('部署失败', err);
+    //       core.setFailed(err.message);
+    //       return reject(err);
+    //     }
+    //     core.debug('部署成功');
+    //     resolve();
+    //   });
+    // });
 
   } catch (error) {
     // Fail the workflow run if an error occurs
