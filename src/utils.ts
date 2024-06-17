@@ -1,6 +1,10 @@
-import * as core from '@actions/core'
+import * as core from '@actions/core';
 import { exec } from '@actions/exec';
+import glob from '@actions/glob';
 
+/**
+ * 克隆仓库
+ */
 export const cloneRepo = async (): Promise<void> => {
   core.startGroup('clone repo');
   try {
@@ -24,6 +28,9 @@ export const cloneRepo = async (): Promise<void> => {
   core.endGroup();
 };
 
+/**
+ * 安装pnpm
+ */
 export const pnpmInstall = async (): Promise<void> => {
   core.startGroup('install pnpm');
   try {
@@ -39,6 +46,9 @@ export const pnpmInstall = async (): Promise<void> => {
   core.endGroup();
 };
 
+/**
+ * 构建项目
+ */
 export const buildProducts = async (): Promise<void> => {
   core.startGroup('build dist');
   try {
@@ -49,6 +59,28 @@ export const buildProducts = async (): Promise<void> => {
       core.setFailed('build failed');
     }
     core.info(`build success`);
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error.message)
+  }
+  core.endGroup();
+};
+
+/**
+ * 生成vite模版
+ */
+export const generateViteTemplate = async (): Promise<void> => {
+  core.startGroup('generate vite template');
+  try {
+    await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
+    await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
+    await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
+    core.info('vite模版生成成功');
+
+    const viteFilePath = await glob.create('template-vite-*/vite.config.*')
+    const files = await viteFilePath.glob()
+    core.debug(`viteFilePath ${viteFilePath}`)
+    core.debug(`files ${files}`)
+    
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

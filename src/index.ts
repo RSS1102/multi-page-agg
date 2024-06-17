@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import { exec } from '@actions/exec'
-import glob from '@actions/glob'
+
 import fs from 'fs';
 import ghPages from 'gh-pages';
-import { buildProducts, cloneRepo, pnpmInstall } from './utils.js';
+import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall } from './utils.js';
 
 /**
  * The main function for the action.
@@ -18,13 +18,7 @@ export async function run(): Promise<void> {
     await cloneRepo();
     await pnpmInstall();
     await buildProducts();
-
-    core.debug('生成vite模版');
-    // 生成vite模版
-    await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
-    await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
-    await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
-    core.debug('vite模版生成成功');
+    await generateViteTemplate();
     // const viteFilePath = await glob.create('template-vite-*/vite.config.*')
     // core.debug(`vite ${viteFilePath}`)
     // const files = await viteFilePath.glob()
