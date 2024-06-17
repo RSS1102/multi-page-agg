@@ -79,7 +79,7 @@ export const generateViteTemplate = async (): Promise<void> => {
     const viteFilePath = await glob.create('template-vite-*/vite.config.*')
     const files = await viteFilePath.glob()
     core.debug(`viteFilePath ${viteFilePath}`)
-    core.debug(`files ${files}`)
+    core.info(`files ${files}`)
 
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
