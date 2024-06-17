@@ -1,4 +1,4 @@
-import core from '@actions/core'
+import * as core from '@actions/core'
 import { exec } from '@actions/exec';
 
 export const cloneRepo = async (): Promise<void> => {
