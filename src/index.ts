@@ -16,15 +16,15 @@ export async function run(): Promise<void> {
     fs.mkdirSync(`${currentDir}/dist`);
 
     await cloneRepo();
-    // await pnpmInstall();
-    // await buildProducts();
+    await pnpmInstall();
+    await buildProducts();
 
-    // core.debug('生成vite模版');
+    core.debug('生成vite模版');
     // 生成vite模版
-    // await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
-    // await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
-    // await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
-    // core.debug('vite模版生成成功');
+    await exec('cd ./tdesign-starter-cli && pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
+    await exec('cd ./tdesign-starter-cli && pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
+    await exec('cd ./tdesign-starter-cli && pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
+    core.debug('vite模版生成成功');
     // const viteFilePath = await glob.create('template-vite-*/vite.config.*')
     // core.debug(`vite ${viteFilePath}`)
     // const files = await viteFilePath.glob()
