@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
+import fs from 'fs';
 
 /**
  * 克隆仓库
@@ -69,6 +70,7 @@ export const buildProducts = async (): Promise<void> => {
  * 生成vite模版
  */
 export const generateViteTemplate = async (): Promise<void> => {
+  //todo 兼容vite farm webpack
   core.startGroup('generate vite template');
   try {
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
@@ -78,8 +80,21 @@ export const generateViteTemplate = async (): Promise<void> => {
 
     const viteFilePath = await glob.create('template-vite-*/vite.config.*')
     const files = await viteFilePath.glob()
-    core.debug(`viteFilePath ${viteFilePath}`)
-    core.info(`files ${files}`)
+    core.info(`files ${files}`);
+    files.map(async (file) => {
+      const templateName = file.match(/template-vite-(.*)\//)
+
+      core.info(JSON.stringify(templateName));
+      
+      const viteConfigFile = fs.readFileSync(file, 'utf-8');
+      const newViteConfig = viteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName?.[0]},`)
+      fs.writeFileSync(file, newViteConfig);
+
+      //   exec(`cd ${templateName[0]} && pnpm install && pnpm run build`);
+      //   // 重命名文件夹使用nodejs
+      //   fs.renameSync(`${file}/dist`, `${currentDir}/dist/${templateName[0]}`);
+    })
+
 
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
