@@ -24,14 +24,14 @@ export const cloneRepo = async (): Promise<void> => {
 };
 
 export const pnpmInstall = async (): Promise<void> => {
-  core.startGroup('clone repo');
+  core.startGroup('install pnpm');
   try {
-    const exitcode = await exec('cd ./tdesign-starter-cli && pnpm install');
+    const exitcode = await exec('cd ./tdesign-starter-cli && npm install pnpm -g');
 
     if (exitcode !== 0) {
       core.setFailed('pnpm install failed');
     }
-    core.debug(`pnpm install success`);
+    core.debug(`install pnpm success`);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
@@ -39,7 +39,7 @@ export const pnpmInstall = async (): Promise<void> => {
 };
 
 export const buildProducts = async (): Promise<void> => {
-  core.startGroup('clone repo');
+  core.startGroup('build dist');
   try {
     const pnpmInstallExitcode = await exec('cd ./tdesign-starter-cli && pnpm install');
     const exitcode = await exec('cd ./tdesign-starter-cli && pnpm run build');
