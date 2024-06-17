@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import { exec } from '@actions/exec';
-import glob from '@actions/glob';
+import * as glob from '@actions/glob';
 
 /**
  * 克隆仓库
@@ -80,7 +80,7 @@ export const generateViteTemplate = async (): Promise<void> => {
     const files = await viteFilePath.glob()
     core.debug(`viteFilePath ${viteFilePath}`)
     core.debug(`files ${files}`)
-    
+
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
