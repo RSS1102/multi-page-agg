@@ -97,7 +97,9 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
       // 临时进入文件夹
       process.chdir(templateName[0]);
       exec(`pnpm install && pnpm run build`);
-      fs.renameSync(`${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
+      fs.renameSync(`${rootDir}/${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
+      // 恢复目录
+      process.chdir(rootDir);
       //怎么查看某一个目录下的所有文件结构
     })
     const files = fs.readdirSync(rootDir);
