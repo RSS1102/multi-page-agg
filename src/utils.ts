@@ -69,7 +69,7 @@ export const buildProducts = async (): Promise<void> => {
 /**
  * 生成vite模版
  */
-export const generateViteTemplate = async (): Promise<void> => {
+export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Promise<void> => {
   //todo 兼容vite farm webpack
   // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
   core.startGroup('generate vite template');
@@ -97,10 +97,10 @@ export const generateViteTemplate = async (): Promise<void> => {
       // 临时进入文件夹
       process.chdir(templateName[0]);
       exec(`pnpm install && pnpm run build`);
-      fs.renameSync(`${templateName[0]}/dist`, `${process.cwd()}/dist/${templateName[0]}`);
+      fs.renameSync(`${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
       //怎么查看某一个目录下的所有文件结构
     })
-    const files = fs.readdirSync(process.cwd());
+    const files = fs.readdirSync(rootDir);
     core.info(`files ${files}`);
 
   } catch (error) {
