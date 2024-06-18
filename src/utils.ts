@@ -71,6 +71,7 @@ export const buildProducts = async (): Promise<void> => {
  */
 export const generateViteTemplate = async (): Promise<void> => {
   //todo 兼容vite farm webpack
+  // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
   core.startGroup('generate vite template');
   try {
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
@@ -78,23 +79,29 @@ export const generateViteTemplate = async (): Promise<void> => {
     await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
     core.info('vite模版生成成功');
 
-    const viteFilePath = await glob.create('template-vite-*/vite.config.*')
-    const files = await viteFilePath.glob()
-    core.info(`files ${files}`);
-    files.map(async (file) => {
-      const templateName = file.match(/template-vite-(.*)\//)
-
+    const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
+    const viteConfigFiles = await viteConfigFilePath.glob()
+    core.info(`files ${viteConfigFiles}`);
+    viteConfigFiles.map(async (viteConfigFile) => {
+      const templateName = viteConfigFile.match(/template-vite-(.*)\//);
       core.info(JSON.stringify(templateName));
-      
-      const viteConfigFile = fs.readFileSync(file, 'utf-8');
-      const newViteConfig = viteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName?.[0]},`)
-      fs.writeFileSync(file, newViteConfig);
 
-      //   exec(`cd ${templateName[0]} && pnpm install && pnpm run build`);
-      //   // 重命名文件夹使用nodejs
-      //   fs.renameSync(`${file}/dist`, `${currentDir}/dist/${templateName[0]}`);
+      if (templateName === null) {
+        core.setFailed('templateName is null');
+        return;
+      }
+
+      const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
+      fs.writeFileSync(viteConfigFile, newViteConfig);
+      // 临时进入文件夹
+      process.chdir(templateName[0]);
+      exec(`pnpm install && pnpm run build`);
+      fs.renameSync(`${templateName[0]}/dist`, `${process.cwd()}/dist/${templateName[0]}`);
+      //怎么查看某一个目录下的所有文件结构
     })
-
+    const files = fs.readdirSync(process.cwd());
+    core.info(`files ${files}`);
 
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
