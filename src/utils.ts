@@ -83,6 +83,7 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
     const viteConfigFiles = await viteConfigFilePath.glob()
     core.info(`files ${viteConfigFiles}`);
     viteConfigFiles.map(async (viteConfigFile) => {
+      // todo 这里有更好的匹配方法吗
       const templateName = viteConfigFile.match(/template-vite-(.*)\//);
       core.info(JSON.stringify(templateName));
 
@@ -94,23 +95,17 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
       const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(viteConfigFile, newViteConfig);
-      // 临时进入文件夹
-      core.info(`templateName[0]: ${templateName[0]}`);
 
-      core.info(`rootDir: ${rootDir}`);
+      process.chdir(`${rootDir}/${templateName[0]}`);
 
-      process.chdir(templateName[0]);
-
-      core.info(`templateName[0]: ${templateName[0]}`);
-
-      core.info(`rootDir: ${rootDir}`);
       exec(`pnpm install && pnpm run build`);
 
       fs.renameSync(`${rootDir}/${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(rootDir);
-      //怎么查看某一个目录下的所有文件结构
     })
+
+      //怎么查看某一个目录下的所有文件结构
     const files = fs.readdirSync(rootDir);
     core.info(`files ${files}`);
 
