@@ -95,8 +95,17 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
       const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(viteConfigFile, newViteConfig);
       // 临时进入文件夹
+      core.info(`templateName[0]: ${templateName[0]}`);
+
+      core.info(`rootDir: ${rootDir}`);
+
       process.chdir(templateName[0]);
+
+      core.info(`templateName[0]: ${templateName[0]}`);
+
+      core.info(`rootDir: ${rootDir}`);
       exec(`pnpm install && pnpm run build`);
+
       fs.renameSync(`${rootDir}/${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(rootDir);
