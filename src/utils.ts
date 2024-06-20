@@ -103,7 +103,7 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
 
       fs.renameSync(`${rootDir}/dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
-      process.chdir(rootDir);
+      // process.chdir(rootDir);
     })
 
       //怎么查看某一个目录下的所有文件结构
