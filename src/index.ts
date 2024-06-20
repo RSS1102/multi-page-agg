@@ -13,15 +13,13 @@ export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
     core.info(`currentDir ${currentDir}`);
-
-    fs.mkdir(`${currentDir}/dist`, { recursive: true }, async (err) => {
-      core.addPath(`${currentDir}/dist`);
-      await cloneRepo();
-      await pnpmInstall();
-      await buildProducts();
-      await generateViteTemplate({
-        rootDir: currentDir,
-      });
+    fs.mkdirSync(`${currentDir}/dist`)
+    core.addPath(`${currentDir}/dist`);
+    await cloneRepo();
+    await pnpmInstall();
+    await buildProducts();
+    await generateViteTemplate({
+      rootDir: currentDir,
     });
   } catch (error) {
     // Fail the workflow run if an error occurs
