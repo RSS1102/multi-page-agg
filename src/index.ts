@@ -12,13 +12,16 @@ import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall } from './u
 export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
+    core.info(`currentDir ${currentDir}`);
 
     fs.mkdirSync(`${currentDir}/dist`);
     core.addPath(`${currentDir}/dist`);
     await cloneRepo();
     await pnpmInstall();
     await buildProducts();
-    await generateViteTemplate();
+    await generateViteTemplate({
+      rootDir: currentDir,
+    });
     // const viteFilePath = await glob.create('template-vite-*/vite.config.*')
     // core.debug(`vite ${viteFilePath}`)
     // const files = await viteFilePath.glob()
