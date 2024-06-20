@@ -71,6 +71,7 @@ export const buildProducts = async (): Promise<void> => {
  */
 export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Promise<void> => {
   //todo 兼容vite farm webpack
+  // todo规定执行目录
   // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
   core.startGroup('generate vite template');
   try {
@@ -100,7 +101,7 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
 
       exec(`pnpm install && pnpm run build`);
 
-      fs.renameSync(`${rootDir}/${templateName[0]}dist`, `${rootDir}/dist/${templateName[0]}`);
+      fs.renameSync(`${rootDir}/dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(rootDir);
     })
