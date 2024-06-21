@@ -13,16 +13,15 @@ export const cloneRepo = async (): Promise<void> => {
     // todo: 传入仓库地址
     // todo: 传入工作目录
     // todo: 传入 options 参数
-    const exitcode = await exec('git', ['init', 'tdesign-starter-cli']);
-    await exec('git', ['-C', 'tdesign-starter-cli', 'remote', 'add', 'origin', 'https://github.com/Tencent/tdesign-starter-cli']);
-    await exec('git', ['-C', 'tdesign-starter-cli', 'fetch', '--depth=1', 'origin', 'develop']);
-    await exec('git', ['-C', 'tdesign-starter-cli', 'checkout', 'develop']);
+    const exitcode = await exec('git', ['init']);
+    await exec('git', ['remote', 'add', 'origin', 'https://github.com/Tencent/tdesign-starter-cli']);
+    await exec('git', ['fetch', '--depth=1', 'origin', 'develop']);
+    await exec('git', ['checkout', 'develop']);
 
     if (exitcode !== 0) {
       core.setFailed('clone repo failed');
     }
     core.info(`clone repo success`);
-    process.chdir('./tdesign-starter-cli');
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
@@ -69,7 +68,7 @@ export const buildProducts = async (): Promise<void> => {
 /**
  * 生成vite模版
  */
-export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Promise<void> => {
+export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: string, currentDir: string }): Promise<void> => {
   //todo 兼容vite farm webpack
   // todo规定执行目录
   // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
@@ -83,34 +82,29 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
     const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
     const viteConfigFiles = await viteConfigFilePath.glob()
     core.info(`files ${viteConfigFiles}`);
-    // viteConfigFiles.map(async (viteConfigFile) => {
-    //   // todo 这里有更好的匹配方法吗
-    //   const templateName = viteConfigFile.match(/template-vite-(.*)\//);
-    //   core.info(`templateName: ${JSON.stringify(templateName)}`);
+    viteConfigFiles.map(async (viteConfigFile) => {
+      // todo 这里有更好的匹配方法吗
+      const templateName = viteConfigFile.match(/template-vite-(.*)\//);
+      core.info(`templateName: ${JSON.stringify(templateName)}`);
 
-    //   if (templateName === null) {
-    //     core.setFailed('templateName is null');
-    //     return;
-    //   }
+      if (templateName === null) {
+        core.setFailed('templateName is null');
+        return;
+      }
 
-    //   const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-    //   const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
-    //   fs.writeFileSync(viteConfigFile, newViteConfig);
+      const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
+      fs.writeFileSync(viteConfigFile, newViteConfig);
 
-    //   process.chdir(`${rootDir}/${templateName[0]}`);
-    //   exec(`pnpm install && pnpm run build`);
+      const templateDir = `${currentDir}/dist/${templateName[0]}`;
+      process.chdir(templateDir);
 
-    //   core.info(`templateName:${rootDir}/${templateName[0]}/dist`);
-    //   core.info(`${rootDir}/dist/${templateName[0]}`);
-    //   fs.renameSync(`${rootDir}/${templateName[0]}/dist`, `${rootDir}/dist/${templateName[0]}`);
-    //   // 恢复目录
-    //   // process.chdir(rootDir);
-    // })
+      exec(`pnpm install && pnpm run build`);
 
-    //怎么查看某一个目录下的所有文件结构
-    const files = fs.readdirSync(rootDir);
-    core.info(`files ${files}`);
-
+      fs.renameSync(`${templateDir}/dist`, `${rootDir}/dist/${templateName[0]}`);
+      // 恢复目录
+      process.chdir(currentDir);
+    })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

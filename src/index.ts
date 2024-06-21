@@ -11,16 +11,17 @@ import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall } from './u
  */
 export async function run(): Promise<void> {
   try {
-    const currentDir = process.cwd();
+    const rootDir = '/home/runner/work';
     process.chdir("..");
+    const currentDir = process.cwd();
 
-    core.info(`currentDir ${currentDir}`);
-    fs.mkdirSync(`${currentDir}/dist`)
+    fs.mkdirSync(`${rootDir}/dist`)
     await cloneRepo();
     await pnpmInstall();
     await buildProducts();
     await generateViteTemplate({
-      rootDir: currentDir,
+      rootDir,
+      currentDir
     });
   } catch (error) {
     // Fail the workflow run if an error occurs
