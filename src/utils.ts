@@ -13,10 +13,10 @@ export const cloneRepo = async (): Promise<void> => {
     // todo: 传入仓库地址
     // todo: 传入工作目录
     // todo: 传入 options 参数
-    const exitcode = await exec(
-      'git',
-      ['clone', '--depth=1', '--single-branch', '--branch', 'develop', 'https://github.com/Tencent/tdesign-starter-cli', 'tdesign-starter-cli'],
-    );
+    const exitcode = await exec('git', ['init', 'tdesign-starter-cli']);
+    await exec('git', ['-C', 'tdesign-starter-cli', 'remote', 'add', 'origin', 'https://github.com/Tencent/tdesign-starter-cli']);
+    await exec('git', ['-C', 'tdesign-starter-cli', 'fetch', '--depth=1', 'origin', 'develop']);
+    await exec('git', ['-C', 'tdesign-starter-cli', 'checkout', 'develop']);
 
     if (exitcode !== 0) {
       core.setFailed('clone repo failed');
@@ -86,7 +86,7 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
     viteConfigFiles.map(async (viteConfigFile) => {
       // todo 这里有更好的匹配方法吗
       const templateName = viteConfigFile.match(/template-vite-(.*)\//);
-      core.info(JSON.stringify(templateName));
+      core.info(`templateName: ${JSON.stringify(templateName)}`);
 
       if (templateName === null) {
         core.setFailed('templateName is null');
@@ -100,12 +100,14 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
       process.chdir(`${rootDir}/${templateName[0]}`);
       exec(`pnpm install && pnpm run build`);
 
+      core.info(`templateName:${rootDir}/${templateName[0]}/dist`);
+      core.info(`${rootDir}/dist/${templateName[0]}`);
       fs.renameSync(`${rootDir}/${templateName[0]}/dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       // process.chdir(rootDir);
     })
 
-      //怎么查看某一个目录下的所有文件结构
+    //怎么查看某一个目录下的所有文件结构
     const files = fs.readdirSync(rootDir);
     core.info(`files ${files}`);
 
