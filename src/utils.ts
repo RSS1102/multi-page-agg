@@ -96,7 +96,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      const templateDir = `${currentDir}/dist/${templateName[0]}`;
+      const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
       exec(`pnpm install && pnpm run build`);
