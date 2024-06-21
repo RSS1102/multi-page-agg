@@ -14,7 +14,6 @@ export async function run(): Promise<void> {
     const currentDir = process.cwd();
     core.info(`currentDir ${currentDir}`);
     fs.mkdirSync(`${currentDir}/dist`)
-    core.addPath(`${currentDir}/dist`);
     await cloneRepo();
     await pnpmInstall();
     await buildProducts();
