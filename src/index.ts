@@ -12,6 +12,8 @@ import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall } from './u
 export async function run(): Promise<void> {
   try {
     const currentDir = process.cwd();
+    process.chdir("..");
+
     core.info(`currentDir ${currentDir}`);
     fs.mkdirSync(`${currentDir}/dist`)
     await cloneRepo();

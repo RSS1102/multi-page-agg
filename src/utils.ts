@@ -83,29 +83,29 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
     const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
     const viteConfigFiles = await viteConfigFilePath.glob()
     core.info(`files ${viteConfigFiles}`);
-    viteConfigFiles.map(async (viteConfigFile) => {
-      // todo 这里有更好的匹配方法吗
-      const templateName = viteConfigFile.match(/template-vite-(.*)\//);
-      core.info(`templateName: ${JSON.stringify(templateName)}`);
+    // viteConfigFiles.map(async (viteConfigFile) => {
+    //   // todo 这里有更好的匹配方法吗
+    //   const templateName = viteConfigFile.match(/template-vite-(.*)\//);
+    //   core.info(`templateName: ${JSON.stringify(templateName)}`);
 
-      if (templateName === null) {
-        core.setFailed('templateName is null');
-        return;
-      }
+    //   if (templateName === null) {
+    //     core.setFailed('templateName is null');
+    //     return;
+    //   }
 
-      const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
-      fs.writeFileSync(viteConfigFile, newViteConfig);
+    //   const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
+    //   const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
+    //   fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      process.chdir(`${rootDir}/${templateName[0]}`);
-      exec(`pnpm install && pnpm run build`);
+    //   process.chdir(`${rootDir}/${templateName[0]}`);
+    //   exec(`pnpm install && pnpm run build`);
 
-      core.info(`templateName:${rootDir}/${templateName[0]}/dist`);
-      core.info(`${rootDir}/dist/${templateName[0]}`);
-      fs.renameSync(`${rootDir}/${templateName[0]}/dist`, `${rootDir}/dist/${templateName[0]}`);
-      // 恢复目录
-      // process.chdir(rootDir);
-    })
+    //   core.info(`templateName:${rootDir}/${templateName[0]}/dist`);
+    //   core.info(`${rootDir}/dist/${templateName[0]}`);
+    //   fs.renameSync(`${rootDir}/${templateName[0]}/dist`, `${rootDir}/dist/${templateName[0]}`);
+    //   // 恢复目录
+    //   // process.chdir(rootDir);
+    // })
 
     //怎么查看某一个目录下的所有文件结构
     const files = fs.readdirSync(rootDir);
