@@ -98,10 +98,9 @@ export const generateViteTemplate = async ({ rootDir }: { rootDir: string }): Pr
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
       process.chdir(`${rootDir}/${templateName[0]}`);
-
       exec(`pnpm install && pnpm run build`);
 
-      fs.renameSync(`${rootDir}/dist`, `${rootDir}/dist/${templateName[0]}`);
+      fs.renameSync(`${rootDir}/${templateName[0]}/dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       // process.chdir(rootDir);
     })
