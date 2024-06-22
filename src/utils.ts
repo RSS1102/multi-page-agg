@@ -96,8 +96,6 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      core.info(`viteConfigFile: ${fs.readFileSync(viteConfigFile, 'utf-8')}`);
-
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
@@ -109,7 +107,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist/`)}`);
       core.info(`拷贝文件: ${fs.existsSync(`${rootDir}/dist/${templateName[0]}`)}`);
 
-      fs.copyFileSync(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
+      fs.copyFileSync(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(currentDir);
     })
