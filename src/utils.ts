@@ -97,9 +97,9 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
       const templateDir = `${currentDir}/${templateName[0]}`;
-      core.info(`进入前的目录: ${process.cwd()}`);
       process.chdir(templateDir);
-      core.info(`进入后的目录: ${process.cwd()}`);
+      
+      core.info(`进入后的目录: ${currentDir}/${templateName[0]}`);
 
       exec(`pnpm install && pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
