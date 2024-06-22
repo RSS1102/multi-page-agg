@@ -106,7 +106,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       await exec(`pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
 
-      core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist`)}`);
+      core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist/`)}`);
       core.info(`拷贝文件: ${fs.existsSync(`${rootDir}/dist/${templateName[0]}`)}`);
 
       fs.copyFileSync(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
