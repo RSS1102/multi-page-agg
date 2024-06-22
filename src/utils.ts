@@ -96,11 +96,14 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
+      core.info(`viteConfigFile: ${fs.readFileSync(viteConfigFile, 'utf-8')}`);
+
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
       core.info(`进入后的目录: ${templateDir}`);
-      await exec(`pnpm install && pnpm run build`);
+      await exec(`pnpm install`);
+      await exec(`pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
 
       core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist`)}`);
