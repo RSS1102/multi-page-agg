@@ -103,6 +103,10 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 
       exec(`pnpm install && pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`);
+
+      core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist`)}`);
+      core.info(`拷贝文件: ${fs.existsSync(`${rootDir}/dist/${templateName[0]}`)}`);
+
       fs.copyFileSync(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(currentDir);
