@@ -91,9 +91,13 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       }
 
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0]},`)
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0].replace(/\/+/g, '/')},`)
+
+      core.info(`newViteConfig: ${newViteConfig}`);
+
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
+      core.info(`当前目录: ${currentDir}`);
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
