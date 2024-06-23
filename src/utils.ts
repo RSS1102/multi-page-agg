@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
-import fs from 'fs';
+import fs from 'fs-extra';
 
 /**
  * 克隆仓库
@@ -107,7 +107,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist/`)}`);
       core.info(`拷贝文件: ${fs.existsSync(`${rootDir}/dist/${templateName[0]}`)}`);
 
-      fs.copyFileSync(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`);
+      fs.copySync(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
       process.chdir(currentDir);
     })
