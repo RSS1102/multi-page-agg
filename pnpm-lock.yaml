@@ -17,13 +17,16 @@ importers:
       '@actions/glob':
         specifier: ^0.4.0
         version: 0.4.0
-      fs-extra:
-        specifier: ^11.2.0
-        version: 11.2.0
+      copy-folder:
+        specifier: ^1.0.10
+        version: 1.0.10
       gh-pages:
         specifier: ^6.1.1
         version: 6.1.1
     devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
       '@types/gh-pages':
         specifier: ^6.1.0
         version: 6.1.0
@@ -58,8 +61,14 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
+  '@types/fs-extra@11.0.4':
+    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
+
   '@types/gh-pages@6.1.0':
     resolution: {integrity: sha512-Ma9bmKkE+WUtywENLC1rSLXTW66cJHJMWX2RQrJTMKhYM8o+73bRJ1ebfo3RWXUcG+HW3khky2nhVaN7nCsa3Q==}
+
+  '@types/jsonfile@6.1.4':
+    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/node@20.12.12':
     resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
@@ -90,6 +99,9 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+
+  copy-folder@1.0.10:
+    resolution: {integrity: sha512-TEAKfcQ+HCphqM4AAaSGWiNModwnEL/U7ezFdWI+L5Eb8jM3wpg6K3mF0Q5400cBP3BgNUQf444vff+hb69fMw==}
 
   email-addresses@5.0.0:
     resolution: {integrity: sha512-4OIPYlA6JXqtVn8zpHpGiI7vE6EQOAg16aGnDMIAlZVinnoZ8208tW1hAbjWydgN/4PLTT9q+O1K6AH/vALJGw==}
@@ -272,7 +284,16 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
+  '@types/fs-extra@11.0.4':
+    dependencies:
+      '@types/jsonfile': 6.1.4
+      '@types/node': 20.12.12
+
   '@types/gh-pages@6.1.0': {}
+
+  '@types/jsonfile@6.1.4':
+    dependencies:
+      '@types/node': 20.12.12
 
   '@types/node@20.12.12':
     dependencies:
@@ -298,6 +319,8 @@ snapshots:
   commondir@1.0.1: {}
 
   concat-map@0.0.1: {}
+
+  copy-folder@1.0.10: {}
 
   email-addresses@5.0.0: {}
 
