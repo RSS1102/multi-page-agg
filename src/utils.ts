@@ -75,17 +75,15 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
   core.startGroup('generate vite template');
   try {
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
-    // await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
-    // await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
-    core.info('vite模版生成成功');
+    await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
+    await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
 
     const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
     const viteConfigFiles = await viteConfigFilePath.glob()
-    core.info(`files ${viteConfigFiles}`);
+
     viteConfigFiles.map(async (viteConfigFile) => {
       // todo 这里有更好的匹配方法吗
       const templateName = viteConfigFile.match(/template-vite-(.*)\//);
-      core.info(`templateName: ${JSON.stringify(templateName)}`);
 
       if (templateName === null) {
         core.setFailed('templateName is null');
@@ -99,13 +97,9 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
-      core.info(`进入后的目录: ${templateDir}`);
       await exec(`pnpm install`);
       await exec(`pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-
-      core.info(`被拷贝文件: ${fs.existsSync(`${templateDir}dist/`)}`);
-      core.info(`拷贝文件: ${fs.existsSync(`${rootDir}/dist/${templateName[0]}`)}`);
 
       copyFolder(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
       // 恢复目录
