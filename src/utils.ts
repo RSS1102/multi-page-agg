@@ -76,7 +76,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
   try {
     await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
-    await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
+    // await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
 
     const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
     const viteConfigFiles = await viteConfigFilePath.glob()
@@ -102,8 +102,6 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
 
       copyFolder(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
-      // 恢复目录
-      process.chdir(currentDir);
     })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
