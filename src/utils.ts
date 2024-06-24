@@ -74,7 +74,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
   // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
   core.startGroup('generate vite template');
   try {
-    await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
+    // await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
     // await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
 
