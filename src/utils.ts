@@ -91,7 +91,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       }
 
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: ${templateName[0].replace(/\/+/g, '/')},`)
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: '${templateName[0].replace(/\/+/g, '/')}',`)
 
       core.info(`newViteConfig: ${newViteConfig}`);
 
