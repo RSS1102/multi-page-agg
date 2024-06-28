@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import { exec } from '@actions/exec'
 
 import fs from 'fs';
 import ghPages from 'gh-pages';
@@ -27,7 +26,7 @@ export async function run(): Promise<void> {
     ghPages.publish(`${rootDir}/dist`, {
       branch: 'gh-pages',
       repo: 'https://github.com/RSS1102/tdesign-starter-cli.git',
-      dotfiles: true
+      add: true
     }, (err) => {
       if (err) {
         core.info(`上传失败: ${err}`);
