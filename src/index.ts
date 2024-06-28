@@ -30,8 +30,9 @@ export async function run(): Promise<void> {
       dotfiles: true
     }, (err) => {
       if (err) {
-        console.log(err);
+        core.info(`上传失败: ${err}`);
       }
+      core.info('上传成功');
     });
   } catch (error) {
     // Fail the workflow run if an error occurs
