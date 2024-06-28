@@ -23,10 +23,9 @@ export async function run(): Promise<void> {
       currentDir
     });
     // 将dist上传上去`${rootDir}/dist`
-    ghPages.publish(`${rootDir}/dist`, {
+   await ghPages.publish(`${rootDir}/dist`, {
       branch: 'gh-pages',
       repo: 'https://github.com/RSS1102/tdesign-starter-cli.git',
-      add: true
     }, (err) => {
       if (err) {
         core.info(`上传失败: ${err}`);
