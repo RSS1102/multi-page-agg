@@ -67,6 +67,7 @@ export const buildProducts = async (): Promise<void> => {
 
 /**
  * 生成vite模版
+ * todo(重构)：将代码抽离出来只处理某一个模板的事情
  */
 export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: string, currentDir: string }): Promise<void> => {
   //todo 兼容vite farm webpack

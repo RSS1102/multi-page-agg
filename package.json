@@ -66,6 +66,7 @@
     "gh-pages": "^6.1.1"
   },
   "devDependencies": {
+    "farmup": "^0.0.12",
     "@types/fs-extra": "^11.0.4",
     "@types/gh-pages": "^6.1.0",
     "@types/node": "^20.12.12",
