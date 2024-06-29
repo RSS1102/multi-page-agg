@@ -22,7 +22,7 @@
     ".": "./dist/index.js"
   },
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=20"
   },
   "scripts": {
     "build": "farmup --format esm src/index.ts --no-exec",
