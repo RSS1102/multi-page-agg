@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@actions/artifact':
     specifier: ^2.1.7
-    version: 2.1.7
+    version: 2.1.7(supports-color@9.4.0)
   '@actions/core':
     specifier: ^1.10.1
     version: 1.10.1
@@ -23,6 +23,9 @@ dependencies:
   gh-pages:
     specifier: ^6.1.1
     version: 6.1.1
+  supports-color:
+    specifier: ^9.4.0
+    version: 9.4.0
 
 devDependencies:
   '@types/fs-extra':
@@ -36,7 +39,7 @@ devDependencies:
     version: 20.14.9
   farmup:
     specifier: ^0.0.12
-    version: 0.0.12
+    version: 0.0.12(supports-color@9.4.0)
   make-coverage-badge:
     specifier: ^1.2.0
     version: 1.2.0
@@ -46,13 +49,13 @@ devDependencies:
 
 packages:
 
-  /@actions/artifact@2.1.7:
+  /@actions/artifact@2.1.7(supports-color@9.4.0):
     resolution: {integrity: sha512-iIFsTPZnb182dBc+Is5v7ZqojC4ydO8Ru4/PD8Azg2diV//fdW3H6biEH/utUlNhwfOuHxZpC/QSQsU5KDEuuw==}
     dependencies:
       '@actions/core': 1.10.1
       '@actions/github': 5.1.1
       '@actions/http-client': 2.2.1
-      '@azure/storage-blob': 12.23.0
+      '@azure/storage-blob': 12.23.0(supports-color@9.4.0)
       '@octokit/core': 3.6.0
       '@octokit/plugin-request-log': 1.0.4(@octokit/core@3.6.0)
       '@octokit/plugin-retry': 3.0.9
@@ -134,13 +137,13 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@azure/core-client@1.9.2:
+  /@azure/core-client@1.9.2(supports-color@9.4.0):
     resolution: {integrity: sha512-kRdry/rav3fUKHl/aDLd/pDLcB+4pOFwPPTVEExuMyaI5r+JBbMWqRbCY1pn5BniDaU3lRxO9eaQ1AmSMehl/w==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.7.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/logger': 1.1.2
@@ -149,13 +152,13 @@ packages:
       - supports-color
     dev: false
 
-  /@azure/core-http-compat@2.1.2:
+  /@azure/core-http-compat@2.1.2(supports-color@9.4.0):
     resolution: {integrity: sha512-5MnV1yqzZwgNLLjlizsU3QqOeQChkIXw781Fwh1xdAqJR5AA32IUaq6xv1BICJvfbHoa+JYcaij2HFkhLbNTJQ==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@azure/abort-controller': 2.1.2
-      '@azure/core-client': 1.9.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-client': 1.9.2(supports-color@9.4.0)
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -177,7 +180,7 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@azure/core-rest-pipeline@1.16.1:
+  /@azure/core-rest-pipeline@1.16.1(supports-color@9.4.0):
     resolution: {integrity: sha512-ExPSbgjwCoht6kB7B4MeZoBAxcQSIl29r/bPeazZJx50ej4JJCByimLOrZoIsurISNyJQQHf30b3JfqC3Hb88A==}
     engines: {node: '>=18.0.0'}
     dependencies:
@@ -186,8 +189,8 @@ packages:
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/logger': 1.1.2
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.5
+      http-proxy-agent: 7.0.2(supports-color@9.4.0)
+      https-proxy-agent: 7.0.5(supports-color@9.4.0)
       tslib: 2.6.3
     transitivePeerDependencies:
       - supports-color
@@ -223,17 +226,17 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@azure/storage-blob@12.23.0:
+  /@azure/storage-blob@12.23.0(supports-color@9.4.0):
     resolution: {integrity: sha512-c1KJ5R5hqR/HtvmFtTn/Y1BNMq45NUBp0LZH7yF8WFMET+wmESgEr0FVTu/Z5NonmfUjbgJZG5Nh8xHc5RdWGQ==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@azure/abort-controller': 1.1.0
       '@azure/core-auth': 1.7.2
-      '@azure/core-client': 1.9.2
-      '@azure/core-http-compat': 2.1.2
+      '@azure/core-client': 1.9.2(supports-color@9.4.0)
+      '@azure/core-http-compat': 2.1.2(supports-color@9.4.0)
       '@azure/core-lro': 2.7.2
       '@azure/core-paging': 1.6.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/core-xml': 1.4.2
@@ -325,7 +328,7 @@ packages:
     dev: true
     optional: true
 
-  /@farmfe/core@1.2.4:
+  /@farmfe/core@1.2.4(supports-color@9.4.0):
     resolution: {integrity: sha512-EyTU+ZskXAtsAiwuHkN9q9TPc/MwohASzn3eDjgIBAFFNOKtei2Gd0QD/F12H03JsUhcEOsvGbxQMZTrzBVnXQ==}
     engines: {node: '>=16.15.1'}
     dependencies:
@@ -344,10 +347,10 @@ packages:
       fast-glob: 3.3.2
       fs-extra: 11.2.0
       is-plain-object: 5.0.0
-      koa: 2.15.3
+      koa: 2.15.3(supports-color@9.4.0)
       koa-compress: 5.1.1
       koa-proxies: 0.12.4(koa@2.15.3)
-      koa-static: 5.0.0
+      koa-static: 5.0.0(supports-color@9.4.0)
       lodash.debounce: 4.0.8
       loglevel: 1.9.1
       mime-types: 2.1.35
@@ -662,11 +665,11 @@ packages:
       negotiator: 0.6.3
     dev: true
 
-  /agent-base@7.1.1:
+  /agent-base@7.1.1(supports-color@9.4.0):
     resolution: {integrity: sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA==}
     engines: {node: '>= 14'}
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1005,7 +1008,7 @@ packages:
     deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
     dev: false
 
-  /debug@3.2.7:
+  /debug@3.2.7(supports-color@9.4.0):
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
       supports-color: '*'
@@ -1014,9 +1017,10 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.3
+      supports-color: 9.4.0
     dev: true
 
-  /debug@4.3.5:
+  /debug@4.3.5(supports-color@9.4.0):
     resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
     engines: {node: '>=6.0'}
     peerDependencies:
@@ -1026,6 +1030,7 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
+      supports-color: 9.4.0
 
   /deep-equal@1.0.1:
     resolution: {integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==}
@@ -1203,11 +1208,11 @@ packages:
       ua-parser-js: 1.0.38
     dev: true
 
-  /farmup@0.0.12:
+  /farmup@0.0.12(supports-color@9.4.0):
     resolution: {integrity: sha512-B8RMixABXp/ILgadg2wQ1BAXwcdOqKdF1K4aq6rYur+7MsrRRlj6g/Wvifil0Xs1zvAUKBGEdCGIcu9TL29Brg==}
     hasBin: true
     dependencies:
-      '@farmfe/core': 1.2.4
+      '@farmfe/core': 1.2.4(supports-color@9.4.0)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -1437,12 +1442,12 @@ packages:
       toidentifier: 1.0.1
     dev: true
 
-  /http-proxy-agent@7.0.2:
+  /http-proxy-agent@7.0.2(supports-color@9.4.0):
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
     dependencies:
-      agent-base: 7.1.1
-      debug: 4.3.5
+      agent-base: 7.1.1(supports-color@9.4.0)
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1458,12 +1463,12 @@ packages:
       - debug
     dev: true
 
-  /https-proxy-agent@7.0.5:
+  /https-proxy-agent@7.0.5(supports-color@9.4.0):
     resolution: {integrity: sha512-1e4Wqeblerz+tMKPIq2EMGiiWW1dIjZOksyHWSUm1rmuvw/how9hBHZ38lAGj5ID4Ik6EdkOw7NmWPy6LAwalw==}
     engines: {node: '>= 14'}
     dependencies:
-      agent-base: 7.1.1
-      debug: 4.3.5
+      agent-base: 7.1.1(supports-color@9.4.0)
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1651,35 +1656,35 @@ packages:
       koa: '>=2'
     dependencies:
       http-proxy: 1.18.1
-      koa: 2.15.3
+      koa: 2.15.3(supports-color@9.4.0)
       path-match: 1.2.4
       uuid: 8.3.2
     transitivePeerDependencies:
       - debug
     dev: true
 
-  /koa-send@5.0.1:
+  /koa-send@5.0.1(supports-color@9.4.0):
     resolution: {integrity: sha512-tmcyQ/wXXuxpDxyNXv5yNNkdAMdFRqwtegBXUaowiQzUKqJehttS0x2j0eOZDQAyloAth5w6wwBImnFzkUz3pQ==}
     engines: {node: '>= 8'}
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
       http-errors: 1.8.1
       resolve-path: 1.4.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /koa-static@5.0.0:
+  /koa-static@5.0.0(supports-color@9.4.0):
     resolution: {integrity: sha512-UqyYyH5YEXaJrf9S8E23GoJFQZXkBVJ9zYYMPGz919MSX1KuvAcycIuS0ci150HCoPf4XQVhQ84Qf8xRPWxFaQ==}
     engines: {node: '>= 7.6.0'}
     dependencies:
-      debug: 3.2.7
-      koa-send: 5.0.1
+      debug: 3.2.7(supports-color@9.4.0)
+      koa-send: 5.0.1(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /koa@2.15.3:
+  /koa@2.15.3(supports-color@9.4.0):
     resolution: {integrity: sha512-j/8tY9j5t+GVMLeioLaxweJiKUayFhlGqNTzf2ZGwL0ZCQijd2RLHK0SLW5Tsko8YyyqCZC2cojIb0/s62qTAg==}
     engines: {node: ^4.8.4 || ^6.10.1 || ^7.10.1 || >= 8.1.4}
     dependencies:
@@ -1688,7 +1693,7 @@ packages:
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookies: 0.9.1
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
       delegates: 1.0.0
       depd: 2.0.0
       destroy: 1.2.0
@@ -2280,6 +2285,10 @@ packages:
   /strnum@1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
     dev: false
+
+  /supports-color@9.4.0:
+    resolution: {integrity: sha512-VL+lNrEoIXww1coLPOmiEmK/0sGigko5COxI09KzHc2VJXJsQ37UaQ+8quuxjDeA7+KnLGTWRyOXSLLR2Wb4jw==}
+    engines: {node: '>=12'}
 
   /tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
