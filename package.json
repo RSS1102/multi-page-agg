@@ -22,7 +22,7 @@
     ".": "./dist/index.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=18.16.0"
   },
   "scripts": {
     "build": "farmup --format esm src/index.ts --no-exec",
@@ -64,8 +64,7 @@
     "@actions/exec": "^1.1.1",
     "@actions/glob": "^0.4.0",
     "copy-folder": "^1.0.10",
-    "gh-pages": "^6.1.1",
-    "supports-color": "^9.4.0"
+    "gh-pages": "^6.1.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
