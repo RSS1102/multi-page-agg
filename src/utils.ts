@@ -3,6 +3,7 @@ import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
 import { copyFolder } from 'copy-folder';
+import { DefaultArtifactClient } from '@actions/artifact';
 /**
  * 克隆仓库
  */
@@ -112,4 +113,27 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
     if (error instanceof Error) core.setFailed(error.message)
   }
   core.endGroup();
+};
+
+/**
+ * 上传产物 artifact
+ */
+export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: number; size: number }> => {
+  core.startGroup('upload artifact');
+  try {
+    const artifact = new DefaultArtifactClient();
+    const { id, size } = await artifact.uploadArtifact(
+      'dist',
+      ['dist'],
+      artifactFilePath,
+    );
+    if (!id || !size) {
+      throw new Error('Artifact size is undefined');
+    }
+    core.info(`upload artifact success, id: ${id}, size: ${size}`);
+    return { id, size };
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error.message);
+    throw error; // 确保在错误情况下抛出异常
+  }
 };
