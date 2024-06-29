@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@actions/artifact':
         specifier: ^2.1.7
-        version: 2.1.7
+        version: 2.1.7(supports-color@9.4.0)
       '@actions/core':
         specifier: ^1.10.1
         version: 1.10.1
@@ -26,6 +26,9 @@ importers:
       gh-pages:
         specifier: ^6.1.1
         version: 6.1.1
+      supports-color:
+        specifier: ^9.4.0
+        version: 9.4.0
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -38,7 +41,7 @@ importers:
         version: 20.14.9
       farmup:
         specifier: ^0.0.12
-        version: 0.0.12
+        version: 0.0.12(supports-color@9.4.0)
       make-coverage-badge:
         specifier: ^1.2.0
         version: 1.2.0
@@ -1275,6 +1278,10 @@ packages:
   strnum@1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
 
+  supports-color@9.4.0:
+    resolution: {integrity: sha512-VL+lNrEoIXww1coLPOmiEmK/0sGigko5COxI09KzHc2VJXJsQ37UaQ+8quuxjDeA7+KnLGTWRyOXSLLR2Wb4jw==}
+    engines: {node: '>=12'}
+
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
 
@@ -1441,12 +1448,12 @@ packages:
 
 snapshots:
 
-  '@actions/artifact@2.1.7':
+  '@actions/artifact@2.1.7(supports-color@9.4.0)':
     dependencies:
       '@actions/core': 1.10.1
       '@actions/github': 5.1.1
       '@actions/http-client': 2.2.1
-      '@azure/storage-blob': 12.23.0
+      '@azure/storage-blob': 12.23.0(supports-color@9.4.0)
       '@octokit/core': 3.6.0
       '@octokit/plugin-request-log': 1.0.4(@octokit/core@3.6.0)
       '@octokit/plugin-retry': 3.0.9
@@ -1506,11 +1513,11 @@ snapshots:
       '@azure/core-util': 1.9.0
       tslib: 2.6.3
 
-  '@azure/core-client@1.9.2':
+  '@azure/core-client@1.9.2(supports-color@9.4.0)':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.7.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/logger': 1.1.2
@@ -1518,11 +1525,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/core-http-compat@2.1.2':
+  '@azure/core-http-compat@2.1.2(supports-color@9.4.0)':
     dependencies:
       '@azure/abort-controller': 2.1.2
-      '@azure/core-client': 1.9.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-client': 1.9.2(supports-color@9.4.0)
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1537,15 +1544,15 @@ snapshots:
     dependencies:
       tslib: 2.6.3
 
-  '@azure/core-rest-pipeline@1.16.1':
+  '@azure/core-rest-pipeline@1.16.1(supports-color@9.4.0)':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.7.2
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/logger': 1.1.2
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.5
+      http-proxy-agent: 7.0.2(supports-color@9.4.0)
+      https-proxy-agent: 7.0.5(supports-color@9.4.0)
       tslib: 2.6.3
     transitivePeerDependencies:
       - supports-color
@@ -1568,15 +1575,15 @@ snapshots:
     dependencies:
       tslib: 2.6.3
 
-  '@azure/storage-blob@12.23.0':
+  '@azure/storage-blob@12.23.0(supports-color@9.4.0)':
     dependencies:
       '@azure/abort-controller': 1.1.0
       '@azure/core-auth': 1.7.2
-      '@azure/core-client': 1.9.2
-      '@azure/core-http-compat': 2.1.2
+      '@azure/core-client': 1.9.2(supports-color@9.4.0)
+      '@azure/core-http-compat': 2.1.2(supports-color@9.4.0)
       '@azure/core-lro': 2.7.2
       '@azure/core-paging': 1.6.2
-      '@azure/core-rest-pipeline': 1.16.1
+      '@azure/core-rest-pipeline': 1.16.1(supports-color@9.4.0)
       '@azure/core-tracing': 1.1.2
       '@azure/core-util': 1.9.0
       '@azure/core-xml': 1.4.2
@@ -1613,7 +1620,7 @@ snapshots:
   '@farmfe/core-win32-x64-msvc@1.2.4':
     optional: true
 
-  '@farmfe/core@1.2.4':
+  '@farmfe/core@1.2.4(supports-color@9.4.0)':
     dependencies:
       '@farmfe/runtime': 0.11.2
       '@farmfe/runtime-plugin-hmr': 3.5.2
@@ -1630,10 +1637,10 @@ snapshots:
       fast-glob: 3.3.2
       fs-extra: 11.2.0
       is-plain-object: 5.0.0
-      koa: 2.15.3
+      koa: 2.15.3(supports-color@9.4.0)
       koa-compress: 5.1.1
-      koa-proxies: 0.12.4(koa@2.15.3)
-      koa-static: 5.0.0
+      koa-proxies: 0.12.4(koa@2.15.3(supports-color@9.4.0))
+      koa-static: 5.0.0(supports-color@9.4.0)
       lodash.debounce: 4.0.8
       loglevel: 1.9.1
       mime-types: 2.1.35
@@ -1844,9 +1851,9 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  agent-base@7.1.1:
+  agent-base@7.1.1(supports-color@9.4.0):
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -2042,13 +2049,17 @@ snapshots:
 
   crypto@1.0.1: {}
 
-  debug@3.2.7:
+  debug@3.2.7(supports-color@9.4.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 9.4.0
 
-  debug@4.3.5:
+  debug@4.3.5(supports-color@9.4.0):
     dependencies:
       ms: 2.1.2
+    optionalDependencies:
+      supports-color: 9.4.0
 
   deep-equal@1.0.1: {}
 
@@ -2150,9 +2161,9 @@ snapshots:
       semver: 7.6.2
       ua-parser-js: 1.0.38
 
-  farmup@0.0.12:
+  farmup@0.0.12(supports-color@9.4.0):
     dependencies:
-      '@farmfe/core': 1.2.4
+      '@farmfe/core': 1.2.4(supports-color@9.4.0)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -2295,10 +2306,10 @@ snapshots:
       statuses: 1.5.0
       toidentifier: 1.0.1
 
-  http-proxy-agent@7.0.2:
+  http-proxy-agent@7.0.2(supports-color@9.4.0):
     dependencies:
-      agent-base: 7.1.1
-      debug: 4.3.5
+      agent-base: 7.1.1(supports-color@9.4.0)
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -2310,10 +2321,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  https-proxy-agent@7.0.5:
+  https-proxy-agent@7.0.5(supports-color@9.4.0):
     dependencies:
-      agent-base: 7.1.1
-      debug: 4.3.5
+      agent-base: 7.1.1(supports-color@9.4.0)
+      debug: 4.3.5(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -2412,38 +2423,38 @@ snapshots:
 
   koa-is-json@1.0.0: {}
 
-  koa-proxies@0.12.4(koa@2.15.3):
+  koa-proxies@0.12.4(koa@2.15.3(supports-color@9.4.0)):
     dependencies:
       http-proxy: 1.18.1
-      koa: 2.15.3
+      koa: 2.15.3(supports-color@9.4.0)
       path-match: 1.2.4
       uuid: 8.3.2
     transitivePeerDependencies:
       - debug
 
-  koa-send@5.0.1:
+  koa-send@5.0.1(supports-color@9.4.0):
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
       http-errors: 1.8.1
       resolve-path: 1.4.0
     transitivePeerDependencies:
       - supports-color
 
-  koa-static@5.0.0:
+  koa-static@5.0.0(supports-color@9.4.0):
     dependencies:
-      debug: 3.2.7
-      koa-send: 5.0.1
+      debug: 3.2.7(supports-color@9.4.0)
+      koa-send: 5.0.1(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
-  koa@2.15.3:
+  koa@2.15.3(supports-color@9.4.0):
     dependencies:
       accepts: 1.3.8
       cache-content-type: 1.0.1
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookies: 0.9.1
-      debug: 4.3.5
+      debug: 4.3.5(supports-color@9.4.0)
       delegates: 1.0.0
       depd: 2.0.0
       destroy: 1.2.0
@@ -2775,6 +2786,8 @@ snapshots:
 
   strnum@1.0.5: {}
 
+  supports-color@9.4.0: {}
+
   tar-stream@3.1.7:
     dependencies:
       b4a: 1.6.6
@@ -2814,13 +2827,14 @@ snapshots:
 
   twirp-ts@2.5.0(@protobuf-ts/plugin@2.9.4):
     dependencies:
-      '@protobuf-ts/plugin': 2.9.4
       '@protobuf-ts/plugin-framework': 2.9.4
       camel-case: 4.1.2
       dot-object: 2.1.5
       path-to-regexp: 6.2.2
       ts-poet: 4.15.0
       yaml: 1.10.2
+    optionalDependencies:
+      '@protobuf-ts/plugin': 2.9.4
 
   type-is@1.6.18:
     dependencies:
