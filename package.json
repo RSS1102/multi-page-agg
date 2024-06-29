@@ -14,9 +14,7 @@
     "url": "https://github.com/RSS1102/multi-page-agg/issues"
   },
   "keywords": [
-    "actions",
-    "node",
-    "setup"
+    "actions"
   ],
   "exports": {
     ".": "./dist/index.js"
@@ -25,39 +23,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "farmup --format esm src/index.ts --no-exec",
-    "release": "npm run build && npm version patch && npm publish"
+    "build": "farmup --format esm src/index.ts --no-exec"
   },
   "license": "MIT",
-  "jest": {
-    "preset": "ts-jest",
-    "verbose": true,
-    "clearMocks": true,
-    "testEnvironment": "node",
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "testMatch": [
-      "**/*.test.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ],
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "./src/**"
-    ]
-  },
   "dependencies": {
     "@actions/artifact": "^2.1.7",
     "@actions/core": "^1.10.1",

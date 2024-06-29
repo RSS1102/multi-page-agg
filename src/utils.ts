@@ -3,7 +3,7 @@ import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
 import { copyFolder } from 'copy-folder';
-import { DefaultArtifactClient } from '@actions/artifact';
+import * as artifactActions from '@actions/artifact'
 /**
  * 克隆仓库
  */
@@ -121,7 +121,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: number; size: number }> => {
   core.startGroup('upload artifact');
   try {
-    const artifact = new DefaultArtifactClient();
+    const artifact = new artifactActions.DefaultArtifactClient();
     const { id, size } = await artifact.uploadArtifact(
       'dist',
       ['dist'],
