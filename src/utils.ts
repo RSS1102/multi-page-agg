@@ -94,7 +94,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       core.info(`templateName: ${templateName[0]}`);
 
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: '/${templateName[0]}',`)
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: 'tdesign-starter-cli/${templateName[0]}',`)
 
       core.info(`newViteConfig: ${newViteConfig}`);
 
