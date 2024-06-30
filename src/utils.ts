@@ -71,20 +71,16 @@ export const buildProducts = async (): Promise<void> => {
  * todo(重构)：将代码抽离出来只处理某一个模板的事情
  */
 export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: string, currentDir: string }): Promise<void> => {
-  //todo 兼容vite farm webpack
-  // todo规定执行目录
-  // todo 传入`${process.cwd()}/dist/${templateName[0]}`参数
   core.startGroup('generate vite template');
+
   try {
-    // await exec('pnpm run dev init template-vite-vue2 --description 这是一个vite构建的vue2项目 --type vue2 --template lite --buildToolType vite');
     await exec('pnpm run dev init template-vite-vue3 --description 这是一个vite构建的vue3项目 --type vue3 --template lite --buildToolType vite');
-    // await exec('pnpm run dev init template-vite-react --description 这是一个vite构建的react项目 --type react --template lite --buildToolType vite');
 
-    const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*')
-    const viteConfigFiles = await viteConfigFilePath.glob()
+    const viteConfigFilePath = await glob.create('template-vite-*/vite.config.*');
+    const viteConfigFiles = await viteConfigFilePath.glob();
 
-    viteConfigFiles.map(async (viteConfigFile) => {
-      // todo 这里有更好的匹配方法吗
+    // 使用 Promise.all 等待所有异步操作完成
+    await Promise.all(viteConfigFiles.map(async (viteConfigFile) => {
       const templateName = viteConfigFile.match(/template-vite-(.*)\//);
 
       if (templateName === null) {
@@ -93,13 +89,12 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       }
 
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: '${templateName[0].replace(/\/+/g, '/')}',`)
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: '${templateName[0].replace(/\/+/g, '/')}',`);
 
       core.info(`newViteConfig: ${newViteConfig}`);
 
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      core.info(`当前目录: ${currentDir}`);
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
 
@@ -107,10 +102,11 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       await exec(`pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
 
-      copyFolder(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
-    })
+      copyFolder(`${templateDir}/dist`, `${rootDir}/dist/${templateName[0]}`);
+    }));
+
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error.message);
   }
   core.endGroup();
 };
@@ -118,24 +114,27 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 /**
  * 上传产物 artifact
  */
-export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: number; size: number }> => {
+export const uploadArtifact = async (artifactFilePath: string): Promise<void> => {
   core.startGroup('upload artifact');
   try {
     const artifact = new artifactActions.DefaultArtifactClient();
-    const createFilePath = await glob.create(`${artifactFilePath}/dist/**`, { followSymbolicLinks: false });
+    const createFilePath = await glob.create(`${artifactFilePath}/**`, { followSymbolicLinks: false });
     const filesGlob = await createFilePath.glob();
     const { id, size } = await artifact.uploadArtifact(
       'github-pages',
       filesGlob,
-      artifactFilePath,
+      artifactFilePath, {
+      retentionDays: 1,
+    }
     );
     if (!id || !size) {
       throw new Error('Artifact size is undefined');
     }
     core.info(`upload artifact success, id: ${id}, size: ${size}`);
-    return { id, size };
+    core.endGroup();
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
     throw error; // 确保在错误情况下抛出异常
   }
+
 };

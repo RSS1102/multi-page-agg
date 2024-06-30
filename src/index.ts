@@ -7,7 +7,7 @@ import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall, uploadArti
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-export async function run(): Promise<{ id: number; size: number } | void> {
+export async function run(): Promise<void> {
   try {
     const rootDir = '/home/runner/work';
     process.chdir("..");
@@ -21,8 +21,7 @@ export async function run(): Promise<{ id: number; size: number } | void> {
         rootDir,
         currentDir
       });
-      const { id, size } = await uploadArtifact(rootDir);
-      return { id, size };
+      await uploadArtifact(rootDir);
     })
 
   } catch (error) {
