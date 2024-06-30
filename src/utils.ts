@@ -2,7 +2,6 @@ import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
-import { copyFolder } from 'copy-folder';
 import * as artifactActions from '@actions/artifact'
 /**
  * 克隆仓库
@@ -107,7 +106,10 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       await exec(`pnpm install`);
       await exec(`pnpm run build`);
       await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-      await fs.promises.cp(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
+
+      await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
+        recursive: true
+      });
     })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
