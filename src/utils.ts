@@ -126,6 +126,7 @@ export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: nu
     const artifact = new artifactActions.DefaultArtifactClient();
     const createFilePath = await glob.create(`${artifactFilePath}/dist/**`, { followSymbolicLinks: false });
     const filesGlob = await createFilePath.glob();
+    core.info(`filesGlob: ${filesGlob}`);
     const { id, size } = await artifact.uploadArtifact(
       'github-pages',
       filesGlob,
