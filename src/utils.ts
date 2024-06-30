@@ -122,9 +122,11 @@ export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: nu
   core.startGroup('upload artifact');
   try {
     const artifact = new artifactActions.DefaultArtifactClient();
+    const createFilePath = await glob.create(`${artifactFilePath}/dist/**`, { followSymbolicLinks: false });
+    const filesGlob = await createFilePath.glob();
     const { id, size } = await artifact.uploadArtifact(
       'dist',
-      ['dist'],
+      filesGlob,
       artifactFilePath,
     );
     if (!id || !size) {
