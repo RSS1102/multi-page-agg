@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-
 import fs from 'fs';
 import ghPages from 'gh-pages';
 import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall, uploadArtifact } from './utils.js';
@@ -14,16 +13,18 @@ export async function run(): Promise<{ id: number; size: number } | void> {
     process.chdir("..");
     const currentDir = process.cwd();
 
-    fs.mkdirSync(`${rootDir}/dist`)
-    await cloneRepo();
-    await pnpmInstall();
-    await buildProducts();
-    await generateViteTemplate({
-      rootDir,
-      currentDir
-    });
-    const { id, size } = await uploadArtifact(rootDir);
-    return { id, size };
+    fs.mkdir(`${rootDir}/dist`, async () => {
+      await cloneRepo();
+      await pnpmInstall();
+      await buildProducts();
+      await generateViteTemplate({
+        rootDir,
+        currentDir
+      });
+      const { id, size } = await uploadArtifact(rootDir);
+      return { id, size };
+    })
+
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
