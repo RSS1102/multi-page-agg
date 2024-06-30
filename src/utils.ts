@@ -106,8 +106,8 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 
       await exec(`pnpm install`);
       await exec(`pnpm run build`);
-      fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-      copyFolder(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
+      await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
+      await fs.promises.cp(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
     })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
