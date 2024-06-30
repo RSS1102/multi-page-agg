@@ -21,7 +21,7 @@ export async function run(): Promise<void> {
         rootDir,
         currentDir
       });
-      await uploadArtifact(`${rootDir}/dist`);
+      await uploadArtifact(rootDir);
     })
 
   } catch (error) {
