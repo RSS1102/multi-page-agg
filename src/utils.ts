@@ -94,7 +94,7 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       core.info(`templateName: ${templateName[0]}`);
 
       const readViteConfigFile = fs.readFileSync(viteConfigFile, 'utf-8');
-      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: 'tdesign-starter-cli/${templateName[0]}',`)
+      const newViteConfig = readViteConfigFile.replace('defineConfig({', `defineConfig({\n base: '/tdesign-starter-cli/${templateName[0]}',`)
 
       core.info(`newViteConfig: ${newViteConfig}`);
 
@@ -107,7 +107,6 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       await exec(`pnpm install`);
       await exec(`pnpm run build`);
       fs.mkdirSync(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-
       copyFolder(`${templateDir}dist`, `${rootDir}/dist/${templateName[0]}`);
     })
   } catch (error) {
