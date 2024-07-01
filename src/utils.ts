@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
-import * as artifactActions from '@actions/artifact'
+import { DefaultArtifactClient } from '@actions/artifact'
 /**
  * 克隆仓库
  */
@@ -123,8 +123,11 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 export const uploadArtifact = async (artifactFilePath: string): Promise<{ id: number; size: number }> => {
   core.startGroup('upload artifact');
   try {
-    const artifact = new artifactActions.DefaultArtifactClient();
+    const artifact = new DefaultArtifactClient();
+    // todo 这里匹配的文件有问题    
+    core.info(`artifactFilePath: ${artifactFilePath}`);
     const createFilePath = await glob.create(`${artifactFilePath}/dist/**`, { followSymbolicLinks: false });
+    core.info(`createFilePath: ${createFilePath}`);
     const filesGlob = await createFilePath.glob();
     core.info(`filesGlob: ${filesGlob}`);
     const { id, size } = await artifact.uploadArtifact(
