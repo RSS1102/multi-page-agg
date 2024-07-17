@@ -99,10 +99,10 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      core.info(`当前目录: ${currentDir}`);
+      core.info(`当前目录1: ${currentDir}`);
       const templateDir = `${currentDir}/${templateName[0]}`;
       process.chdir(templateDir);
-
+      core.info(`当前目录2: ${currentDir}`);
       await exec(`pnpm install`);
       await exec(`pnpm run build`);
       core.info(`build ${templateName[0]} success`);
