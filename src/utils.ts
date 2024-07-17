@@ -3,6 +3,7 @@ import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
 import { DefaultArtifactClient } from '@actions/artifact'
+import { cwd } from 'process';
 /**
  * 克隆仓库
  */
@@ -99,20 +100,31 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
 
       fs.writeFileSync(viteConfigFile, newViteConfig);
 
-      core.info(`当前目录1: ${currentDir}`);
       const templateDir = `${currentDir}/${templateName[0]}`;
-      process.chdir(templateDir);
       core.info(`当前目录2: ${currentDir}`);
-      await exec(`pnpm install`);
-      await exec(`pnpm run build`);
-      core.info(`build ${templateName[0]} success`);
-      await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-      core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
-      await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
-        recursive: true
+
+      await exec(`pnpm install`, [], {
+        cwd: templateDir,
       });
+      await exec(`pnpm run build`, [], {
+        cwd: templateDir,
+        listeners: {
+          stdout: async (data) => {
+            core.info(data.toString());
+            await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
+            core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
+            await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
+              recursive: true
+            });
+
+          },
+        }
+      });
+
       core.info(`copy ${templateName[0]} success`);
     })
+
+
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
