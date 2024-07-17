@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import fs from 'fs';
-import ghPages from 'gh-pages';
+// import ghPages from 'gh-pages';
 import { buildProducts, cloneRepo, generateViteTemplate, pnpmInstall, uploadArtifact } from './utils.js';
 
 /**
