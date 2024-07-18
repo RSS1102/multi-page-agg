@@ -111,12 +111,24 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
         listeners: {
           stdout: async (data) => {
             core.info(data.toString());
-            await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-            core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
-            await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
-              recursive: true
-            });
+            // await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
+            // core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
+            // await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
+            //   recursive: true
+            // });
 
+          },
+          stderr: async (data) => {
+            core.info(data.toString());
+          },
+          stdline: async (data) => {
+            core.info(data.toString());
+          },
+          errline: async (data) => {
+            core.info(data.toString());
+          },
+          debug: async (data) => {
+            core.info(data.toString());
           },
         }
       });
