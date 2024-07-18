@@ -3,7 +3,7 @@ import { exec } from '@actions/exec';
 import * as glob from '@actions/glob';
 import fs from 'fs';
 import { DefaultArtifactClient } from '@actions/artifact'
-import { cwd } from 'process';
+import { execSync } from 'child_process';
 /**
  * 克隆仓库
  */
@@ -103,15 +103,18 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const templateDir = `${currentDir}/${templateName[0]}`;
       core.info(`当前目录2: ${currentDir}`);
 
-      await exec(`pnpm install && pnpm run build`, [], {
-        cwd: templateDir,
-      });
+    // 合并 pnpm 命令的执行
+    await exec(`pnpm install && pnpm run build`, [], { cwd: templateDir });
 
-      await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-      core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
-      await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
-        recursive: true
-      });
+    // 构建目标目录路径
+    const targetDir = `${rootDir}/dist/${templateName[0]}`;
+
+    // 创建目标目录，如果不存在
+    await fs.promises.mkdir(targetDir, { recursive: true });
+    core.info(`mkdir ${templateName[0]} to ${targetDir}`);
+
+    // 复制构建的文件到目标目录
+    await fs.promises.cp(`${templateDir}dist/`, targetDir, { recursive: true });
 
       core.info(`copy ${templateName[0]} success`);
     })
