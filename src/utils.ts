@@ -103,39 +103,18 @@ export const generateViteTemplate = async ({ rootDir, currentDir }: { rootDir: s
       const templateDir = `${currentDir}/${templateName[0]}`;
       core.info(`当前目录2: ${currentDir}`);
 
-      await exec(`pnpm install`, [], {
+      await exec(`pnpm install && pnpm run build`, [], {
         cwd: templateDir,
       });
-      await exec(`pnpm run build`, [], {
-        cwd: templateDir,
-        listeners: {
-          stdout: async (data) => {
-            core.info(data.toString());
-            // await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
-            // core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
-            // await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
-            //   recursive: true
-            // });
 
-          },
-          stderr: async (data) => {
-            core.info(data.toString());
-          },
-          stdline: async (data) => {
-            core.info(data.toString());
-          },
-          errline: async (data) => {
-            core.info(data.toString());
-          },
-          debug: async (data) => {
-            core.info(data.toString());
-          },
-        }
+      await fs.promises.mkdir(`${rootDir}/dist/${templateName[0]}`, { recursive: true });
+      core.info(`mkdir ${templateName[0]} to ${rootDir}/dist/${templateName[0]}`);
+      await fs.promises.cp(`${templateDir}dist/`, `${rootDir}/dist/${templateName[0]}`, {
+        recursive: true
       });
 
       core.info(`copy ${templateName[0]} success`);
     })
-
 
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
